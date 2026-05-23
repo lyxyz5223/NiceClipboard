@@ -72,7 +72,7 @@
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
     <OutDir>$(SolutionDir)pack\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_v$(VER_PRODUCTVERSION_STR)</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
