@@ -29,6 +29,10 @@
 | 开发编译   | Visual Studio 2022      |
 | Qt 版本    | 6.7.2                   |
 
+## 📌运行截图
+
+<img width="628" height="588" alt="image" src="https://github.com/user-attachments/assets/8621cdf9-62e8-4d83-a631-b49104c37ff9" />
+
 ## 🔧 构建方法
 
 ### 前置条件
@@ -59,35 +63,7 @@ msbuild NiceClipboard.sln /p:Configuration=Release /p:Platform=x64
 3. 主窗口显示剪贴板历史列表，支持左键/右键点击、双击等操作。
 4. 可通过设置界面自定义快捷键、外观和行为。
 
-## 📁 项目结构
-
-```
-NiceClipboard/
-├── NiceClipboard.sln              # 解决方案文件
-├── NiceClipboard/                 # 项目源码
-│   ├── main.cpp                   # 入口，异常处理
-│   ├── NiceClipboard.h/cpp        # 主窗口类
-│   ├── ClipboardListView.h/cpp    # 剪贴板历史列表视图
-│   ├── GlobalConfig.h/cpp         # 全局配置定义
-│   ├── GlobalConfigManager.h/cpp  # 配置管理器
-│   ├── SettingsWidget.h/cpp       # 设置界面
-│   ├── SettingsUIFactory.h/cpp    # 设置 UI 工厂
-│   ├── AnimatedMenu.h/cpp         # 动画菜单
-│   ├── AnimatedMenuAction.h/cpp   # 动画菜单动作
-│   ├── HotKeyEdit.h/cpp           # 热键编辑控件
-│   ├── Win32HotKey.h/cpp          # Win32 全局热键
-│   ├── ScheduledTask.h/cpp        # 计划任务（开机自启）
-│   ├── GlobalScheduledTaskManager.h/cpp
-│   ├── StringProcess.h/cpp        # 字符串编码转换
-│   ├── AdminUtils.h/cpp           # 管理员权限工具
-│   ├── DoubleClickController.h/cpp# 双击事件控制器
-│   ├── RoundedIconButton.h/cpp    # 圆角图标按钮
-│   ├── ColoredSvgIcon.h/cpp       # 彩色 SVG 图标
-│   ├── TranslucentScreenMask.h/cpp# 半透明屏幕遮罩
-│   ├── CheckBoxWithUserData.h/cpp # 带用户数据的复选框
-│   └── svgs/                      # SVG 图标资源
-```
 
 ## 📄 许可证
 
-本项目基于 MIT 许可证开源 — 参见 [LICENSE](LICENSE) 文件。
+本项目基于许可证开源 — 参见 [LICENSE](LICENSE) 文件。
