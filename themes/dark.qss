@@ -1,0 +1,321 @@
+/* ==================== 标题栏按钮图标覆盖 ==================== */
+#btnMenu {
+    qproperty-icon: url(themes/dark/more-vert.svg);
+}
+
+#btnMenu:hover {
+    qproperty-icon: url(themes/dark/more-vert.svg);
+}
+
+#btnShowMinimized {
+    qproperty-icon: url(themes/dark/minus.svg);
+}
+
+#btnShowMinimized:hover {
+    qproperty-icon: url(themes/dark/minus.svg);
+}
+
+#btnShowMaximized {
+    qproperty-icon: url(themes/dark/maximize.svg);
+}
+
+#btnShowMaximized:hover {
+    qproperty-icon: url(themes/dark/maximize.svg);
+}
+
+#btnClose {
+    qproperty-icon: url(themes/dark/xmark.svg);
+}
+
+#btnClose:hover {
+    qproperty-icon: url(themes/dark/xmark.svg);
+}
+
+/* ==================== 底部按钮图标覆盖 ==================== */
+#btnSort {
+    qproperty-icon: url(themes/dark/sort.svg);
+}
+
+#btnSort:hover {
+    qproperty-icon: url(themes/dark/sort.svg);
+}
+
+#btnSearch {
+    qproperty-icon: url(themes/dark/search.svg);
+}
+
+#btnSearch:hover {
+    qproperty-icon: url(themes/dark/search.svg);
+}
+
+#btnSettings {
+    qproperty-icon: url(themes/dark/settings.svg);
+}
+
+#btnSettings:hover {
+    qproperty-icon: url(themes/dark/settings.svg);
+}
+
+/* ==================== 列表项按钮图标覆盖 ==================== */
+#btnOptions {
+    qproperty-icon: url(themes/dark/more-horiz.svg);
+}
+
+#btnOptions:hover {
+    qproperty-icon: url(themes/dark/more-horiz.svg);
+}
+
+#btnPin {
+    qproperty-icon: url(themes/dark/pin.svg);
+}
+
+#btnPin:hover {
+    qproperty-icon: url(themes/dark/pin.svg);
+}
+
+/* ==================== 主窗口 ==================== */
+QMainWindow {
+    background-color: #1c1c1e;
+    border: 0.5px solid #38383a;
+}
+
+#centralWidget {
+    background-color: #1c1c1e;
+}
+
+/* ==================== 整体布局调整 ==================== */
+#mainVerticalLayout {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* ==================== 标题栏区域 ==================== */
+#titleBarLayout {
+    margin: 0px;
+    padding: 4px 8px;
+}
+
+#labelTitle {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 8px;
+}
+
+/* 标题栏按钮 */
+RoundedIconButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+RoundedIconButton:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+RoundedIconButton:pressed {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+#btnClose:hover {
+    background-color: #ff453a;
+}
+
+#btnClose:pressed {
+    background-color: #d9362e;
+}
+
+/* ==================== 剪贴板列表 ==================== */
+ClipboardListView {
+    background-color: #1c1c1e;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 13px;
+    margin: 0px;
+    padding: 0px;
+}
+
+ClipboardListView::item {
+    background-color: transparent;
+    border: none;
+    border-bottom: 0.5px solid #2c2c2e;
+    padding: 0px;
+    margin: 0px;
+    color: #e5e5e7;
+}
+
+ClipboardListView::item:hover {
+    background-color: #2c2c2e;
+}
+
+ClipboardListView::item:selected {
+    background-color: #3a3a3c;
+    color: #ffffff;
+}
+
+/* ==================== 列表项控件 ==================== */
+ClipboardListViewItemWidget {
+    background-color: transparent;
+    border: none;
+}
+
+ClipboardListViewItemWidget:hover {
+    background-color: transparent;
+}
+
+/* 列表项水平布局 */
+#itemHorizontalLayout {
+    margin: 0px;
+    padding: 0px 8px;
+}
+
+/* 列表项按钮垂直布局 */
+#itemButtonLayout {
+    margin: 0px;
+    padding: 4px 0px;
+}
+
+/* 内容标签 */
+#labelContents {
+    color: #e5e5e7;
+    font-size: 13px;
+    padding: 8px 4px;
+    background-color: transparent;
+}
+
+/* 操作按钮 */
+#btnOptions,
+#btnPin {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 2px;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+#btnOptions:hover,
+#btnPin:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+#btnOptions:pressed,
+#btnPin:pressed {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ==================== 滚动条 ==================== */
+QScrollBar:vertical {
+    background: transparent;
+    width: 5px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgba(255, 255, 255, 0.15);
+    min-height: 40px;
+    border-radius: 2px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* ==================== 底部栏 ==================== */
+#bottomBarLayout {
+    margin: 0px;
+    padding: 6px 8px;
+}
+
+/* 底部按钮 */
+QPushButton#btnSort,
+QPushButton#btnSettings {
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+QPushButton#btnSort:hover,
+QPushButton#btnSettings:hover {
+    background-color: #2c2c2e;
+}
+
+QPushButton#btnSort:pressed,
+QPushButton#btnSettings:pressed {
+    background-color: #3a3a3c;
+}
+
+/* 搜索框容器 */
+#widgetSearch {
+    background-color: #2c2c2e;
+    border: 1px solid #2c2c2e;
+    border-radius: 6px;
+    margin: 0px;
+}
+
+#widgetSearch:focus-within {
+    border-color: #48484a;
+}
+
+/* 搜索框输入 */
+QLineEdit#lineEditSearch {
+    background-color: transparent;
+    border: none;
+    padding: 4px 2px 4px 8px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+QLineEdit#lineEditSearch:focus {
+    background-color: transparent;
+    border: none;
+}
+
+QLineEdit#lineEditSearch::placeholder {
+    color: #636366;
+}
+
+/* 搜索按钮 */
+QPushButton#btnSearch {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+QPushButton#btnSearch:hover {
+    background-color: #3a3a3c;
+}
+
+QPushButton#btnSearch:pressed {
+    background-color: #48484a;
+}
+
+/* ==================== 工具提示 ==================== */
+QToolTip {
+    background-color: #2c2c2e;
+    border: 0.5px solid #48484a;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #ffffff;
+    font-size: 12px;
+}
