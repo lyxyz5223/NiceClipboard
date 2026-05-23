@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{279F6963-D9C1-4C30-847A-7BE2ACB1D301}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>6.7.2_msvc2019_64</QtInstall>
+    <QtModules>core;gui;network;widgets;svg</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>6.7.2_msvc2019_64</QtInstall>
+    <QtModules>core;gui;network;widgets;svg</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <IncludePath>..\..\Libraries\Logger\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\Libraries\Logger\build\Debugx64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <IncludePath>..\..\Libraries\Logger\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\Libraries\Logger\build\Releasex64;$(LibraryPath)</LibraryPath>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>Logger_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <AdditionalDependencies>Logger.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AdminUtils.cpp" />
+    <ClCompile Include="AnimatedMenu.cpp" />
+    <ClCompile Include="AnimatedMenuAction.cpp" />
+    <ClCompile Include="CheckBoxWithUserData.cpp" />
+    <ClCompile Include="ClipboardListViewItem.cpp" />
+    <ClCompile Include="ColoredSvgIcon.cpp" />
+    <ClCompile Include="DoubleClickController.cpp" />
+    <ClCompile Include="GlobalConfig.cpp" />
+    <ClCompile Include="GlobalConfigManager.cpp" />
+    <ClCompile Include="GlobalScheduledTaskManager.cpp" />
+    <ClCompile Include="ScheduledTask.cpp" />
+    <ClCompile Include="Win32HotKey.cpp" />
+    <ClCompile Include="HotKeyEdit.cpp" />
+    <ClCompile Include="RoundedIconButton.cpp" />
+    <ClCompile Include="SettingsUIFactory.cpp" />
+    <ClCompile Include="SettingsWidget.cpp" />
+    <ClCompile Include="StringProcess.cpp" />
+    <ClCompile Include="TranslucentScreenMask.cpp" />
+    <QtRcc Include="NiceClipboard.qrc" />
+    <QtUic Include="ClipboardListViewItemWidget.ui" />
+    <QtUic Include="NiceClipboard.ui" />
+    <QtMoc Include="NiceClipboard.h" />
+    <ClCompile Include="ClipboardListView.cpp" />
+    <ClCompile Include="NiceClipboard.cpp" />
+    <ClCompile Include="main.cpp" />
+    <None Include="NiceClipboard.ico" />
+    <QtUic Include="SettingsWidget.ui" />
+    <ResourceCompile Include="NiceClipboard.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ClipboardListView.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdminUtils.h" />
+    <ClInclude Include="AnimatedMenu.h" />
+    <QtMoc Include="TranslucentScreenMask.h" />
+    <QtMoc Include="AnimatedMenuAction.h" />
+    <QtMoc Include="RoundedIconButton.h" />
+    <QtMoc Include="CheckBoxWithUserData.h" />
+    <ClInclude Include="ClipboardItemData.h" />
+    <QtMoc Include="ClipboardListViewItem.h" />
+    <ClInclude Include="ColoredSvgIcon.h" />
+    <ClInclude Include="DoubleClickController.h" />
+    <ClInclude Include="GlobalConfig.h" />
+    <ClInclude Include="GlobalConfigManager.h" />
+    <ClInclude Include="GlobalScheduledTaskManager.h" />
+    <ClInclude Include="ScheduledTask.h" />
+    <ClInclude Include="Win32HotKey.h" />
+    <QtMoc Include="SettingsUIFactory.h" />
+    <QtMoc Include="SettingsWidget.h" />
+    <QtMoc Include="HotKeyEdit.h" />
+    <ClInclude Include="StringProcess.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

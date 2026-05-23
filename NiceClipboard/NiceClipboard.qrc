@@ -1,0 +1,33 @@
+<RCC>
+  <qresource prefix="/NiceClipboard">
+    <file>svgs/reduce.svg</file>
+    <file>svgs/enlarge.svg</file>
+    <file>svgs/expand.svg</file>
+    <file>svgs/collapse.svg</file>
+    <file>svgs/sort.svg</file>
+    <file>svgs/settings.svg</file>
+    <file>svgs/more-horiz.svg</file>
+    <file>svgs/more-horiz-circle.svg</file>
+    <file>svgs/more-vert.svg</file>
+    <file>svgs/more-vert-circle.svg</file>
+    <file>svgs/pin.svg</file>
+    <file>svgs/pin-slash.svg</file>
+    <file>svgs/pin-slash-solid.svg</file>
+    <file>svgs/pin-solid.svg</file>
+    <file>svgs/maximize.svg</file>
+    <file>svgs/minus.svg</file>
+    <file>svgs/minus-circle.svg</file>
+    <file>svgs/minus-circle-solid.svg</file>
+    <file>svgs/minus-square.svg</file>
+    <file>svgs/minus-square-solid.svg</file>
+    <file>svgs/xmark.svg</file>
+    <file>svgs/search.svg</file>
+    <file>svgs/xmark-circle.svg</file>
+    <file>svgs/xmark-square.svg</file>
+    <file>svgs/xmark-square-solid.svg</file>
+    <file>svgs/NiceClipboard.svg</file>
+    <file>svgs/heart.svg</file>
+    <file>svgs/clipboard-check.svg</file>
+    <file>svgs/paste-clipboard.svg</file>
+  </qresource>
+</RCC>
