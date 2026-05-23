@@ -167,6 +167,9 @@
     <ClInclude Include="ColoredSvgIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SettingsWidget.ui">

@@ -154,6 +154,7 @@
     <ClInclude Include="GlobalConfig.h" />
     <ClInclude Include="GlobalConfigManager.h" />
     <ClInclude Include="GlobalScheduledTaskManager.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ScheduledTask.h" />
     <ClInclude Include="Win32HotKey.h" />
     <QtMoc Include="SettingsUIFactory.h" />
