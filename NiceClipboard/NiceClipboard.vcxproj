@@ -16,6 +16,9 @@
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <VER_PRODUCTVERSION_STR>$([System.Text.RegularExpressions.Regex]::Match(
+      $([System.IO.File]::ReadAllText($(MSBuildProjectDirectory)\version.h)),
+      '#define\s+VER_PRODUCTVERSION_STR\s+"([^"]*)"').Groups[1].Value.Trim())</VER_PRODUCTVERSION_STR>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -67,6 +70,9 @@
     <IncludePath>..\..\Libraries\Logger\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\Libraries\Logger\build\Releasex64;$(LibraryPath)</LibraryPath>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+    <OutDir>$(SolutionDir)pack\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_v$(VER_PRODUCTVERSION_STR)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
@@ -78,6 +84,9 @@
     <Link>
       <AdditionalDependencies>Logger.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
@@ -156,6 +165,7 @@
     <ClInclude Include="GlobalScheduledTaskManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ScheduledTask.h" />
+    <ClInclude Include="version.h" />
     <ClInclude Include="Win32HotKey.h" />
     <QtMoc Include="SettingsUIFactory.h" />
     <QtMoc Include="SettingsWidget.h" />
