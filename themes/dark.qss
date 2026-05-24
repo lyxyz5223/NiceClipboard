@@ -56,6 +56,14 @@
     qproperty-icon: url(themes/dark/settings.svg);
 }
 
+#btnClear {
+    qproperty-icon: url(themes/dark/trash.svg);
+}
+
+#btnClear:hover {
+    qproperty-icon: url(themes/dark/trash.svg);
+}
+
 /* ==================== 列表项按钮图标覆盖 ==================== */
 #btnOptions {
     qproperty-icon: url(themes/dark/more-horiz.svg);
@@ -309,6 +317,27 @@ QPushButton#btnSearch:hover {
 QPushButton#btnSearch:pressed {
     background-color: #48484a;
 }
+
+QPushButton#btnSort,
+QPushButton#btnClear {
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+QPushButton#btnSort:hover,
+QPushButton#btnClear:hover {
+    background-color: #2c2c2e;
+}
+
+QPushButton#btnSort:pressed,
+QPushButton#btnClear:pressed {
+    background-color: #3a3a3c;
+}
+
 
 /* ==================== 工具提示 ==================== */
 QToolTip {

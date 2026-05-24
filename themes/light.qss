@@ -55,6 +55,13 @@
 #btnSettings:hover {
     qproperty-icon: url(themes/light/settings.svg);
 }
+#btnClear {
+    qproperty-icon: url(themes/light/trash.svg);
+}
+
+#btnClear:hover {
+    qproperty-icon: url(themes/light/trash.svg);
+}
 
 /* ==================== 列表项按钮图标覆盖 ==================== */
 #btnOptions {
@@ -309,6 +316,27 @@ QPushButton#btnSearch:hover {
 QPushButton#btnSearch:pressed {
     background-color: #d1d1d6;
 }
+
+QPushButton#btnSort,
+QPushButton#btnClear {
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+QPushButton#btnSort:hover,
+QPushButton#btnClear:hover {
+    background-color: #e5e5ea;
+}
+
+QPushButton#btnSort:pressed,
+QPushButton#btnClear:pressed {
+    background-color: #d1d1d6;
+}
+
 
 /* ==================== 工具提示 ==================== */
 QToolTip {
