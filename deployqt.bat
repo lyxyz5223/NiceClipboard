@@ -19,5 +19,5 @@ echo Version: [!VER_PRODUCTVERSION_STR!]
 copy .\pack\x64\!PROJECT_NAME!.exe .\pack\!PROJECT_NAME!_v!VER_PRODUCTVERSION_STR!_x64.exe
 
 :: Compress the files in the x64 directory into a zip file
-powershell Compress-Archive -Path ".\pack\x64\*" -DestinationPath ".\pack\!PROJECT_NAME!_v!VER_PRODUCTVERSION_STR!_x64.zip"
+powershell Compress-Archive -Path ".\pack\x64\*" -DestinationPath ".\pack\!PROJECT_NAME!_v!VER_PRODUCTVERSION_STR!_x64.zip" -Force
 
