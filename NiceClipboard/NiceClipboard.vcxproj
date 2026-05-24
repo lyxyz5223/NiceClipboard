@@ -65,6 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <IncludePath>..\..\Libraries\Logger\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\Libraries\Logger\build\Debugx64;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <IncludePath>..\..\Libraries\Logger\include;$(IncludePath)</IncludePath>
@@ -117,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="AdminUtils.cpp" />
     <ClCompile Include="AnimatedMenu.cpp" />
     <ClCompile Include="AnimatedMenuAction.cpp" />
@@ -136,6 +138,7 @@
     <ClCompile Include="StringProcess.cpp" />
     <ClCompile Include="TranslucentScreenMask.cpp" />
     <QtRcc Include="NiceClipboard.qrc" />
+    <QtUic Include="AboutWidget.ui" />
     <QtUic Include="ClipboardListViewItemWidget.ui" />
     <QtUic Include="NiceClipboard.ui" />
     <QtMoc Include="NiceClipboard.h" />
@@ -150,6 +153,7 @@
     <QtMoc Include="ClipboardListView.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="AboutDialog.h" />
     <ClInclude Include="AdminUtils.h" />
     <ClInclude Include="AnimatedMenu.h" />
     <QtMoc Include="TranslucentScreenMask.h" />

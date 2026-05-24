@@ -103,6 +103,9 @@
     <ClCompile Include="ColoredSvgIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AboutDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ClipboardListView.h">
@@ -130,6 +133,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ClipboardListViewItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AboutDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -179,6 +185,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ClipboardListViewItemWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AboutWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

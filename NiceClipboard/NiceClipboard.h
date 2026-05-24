@@ -23,10 +23,11 @@ class NiceClipboard : public QMainWindow
     Q_OBJECT
 
 private:
-    QIcon minimizeIcon{ ":/NiceClipboard/svgs/minus.svg" };
-    QIcon maximizeIcon{ ":/NiceClipboard/svgs/enlarge.svg" };
-    QIcon restoreIcon{ ":/NiceClipboard/svgs/reduce.svg" };
-    QIcon closeIcon{ ":/NiceClipboard/svgs/xmark.svg" };
+    QIcon appIcon{ ":/NiceClipboard/svgs/NiceClipboard.svg" };
+    QIcon minimizeIcon{ ":/iconoir/svgs/iconoir/minus.svg" };
+    QIcon maximizeIcon{ ":/iconoir/svgs/iconoir/enlarge.svg" };
+    QIcon restoreIcon{ ":/iconoir/svgs/iconoir/reduce.svg" };
+    QIcon closeIcon{ ":/iconoir/svgs/iconoir/xmark.svg" };
     //QColor titleBarBtnsBkgColor{ 250, 240, 230, 255 };
 
 public:
@@ -38,6 +39,7 @@ protected:
     virtual void hideEvent(QHideEvent* event) override;
     virtual void closeEvent(QCloseEvent* event) override;
     virtual bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
+    virtual void changeEvent(QEvent* event) override;
 
 private slots:
     void onClipboardDataChanged();
@@ -53,7 +55,9 @@ private slots:
     void onBtnMenuClicked();
     void onBtnSortClicked();
     void onBtnSettingsClicked();
+    void onBtnClearClicked();
 
+    void openAboutDialog();
 private:
     Ui::NiceClipboardClass ui;
     
@@ -78,7 +82,8 @@ private:
     struct ClipboardHistoryOperation {
         enum Operation {
             Insert,
-            Remove
+            Remove,
+            Clear,
         };
         struct InsertData {
             int index = -1;
@@ -158,11 +163,16 @@ private:
     static void winEventHookProc(HWINEVENTHOOK hWinEventHook, DWORD event, HWND hwnd, LONG idObject, LONG idChild, DWORD dwEventThread, DWORD dwmsEventTime);
     static LRESULT lowLevelMouseHookProc(int nCode, WPARAM wParam, LPARAM lParam);
 
+    //void pushClipboardHistoryQueue(ClipboardHistoryOperation::Operation operation, int index = 0, const ClipboardItemData& item = {});
     void pushInsertClipboardHistoryQueue(int index, const ClipboardItemData& item);
     void pushRemoveClipboardHistoryQueue(int index);
+    void pushClearClipboardHistoryQueue();
+
     // index = -1 表示插入末尾
     void insertClipboardHistoryItem(qsizetype index, const ClipboardItemData& itemData);
     void searchClipboardHistoryItem();
+    void removeClipboardHistoryItem(qsizetype index);
+    void removeClipboardHistoryItem(QListWidgetItem* item);
 
     void readClipboardHistory();
     // index = -1 表示插入末尾

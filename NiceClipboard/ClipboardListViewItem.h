@@ -4,6 +4,7 @@
 #include <QStyledItemDelegate>
 #include <QAbstractListModel>
 #include <QListWidget>
+#include <QFontMetrics>
 
 class ClipboardListViewItemWidgetContentsLabel : public QLabel {
     QImage image;
@@ -32,17 +33,22 @@ private:
     //ClipboardItemData itemData;
     QImage itemImage;
     QPixmap cachedPixmap;
+    QString itemText;
+    QString cachedText;
 
 protected:
     virtual void showEvent(QShowEvent* event) override {
         QWidget::showEvent(event);
         if (cachedPixmap.isNull())
             updateImage();
+        if (cachedText.isEmpty())
+            updateText();
     }
 
     virtual void resizeEvent(QResizeEvent* event) override {
         QWidget::resizeEvent(event);
         updateImage();
+        updateText();
     }
 
     void updateImage() {
@@ -50,8 +56,6 @@ protected:
 
         QSize labelSize = ui.labelContents->contentsRect().size();
         if (labelSize.isEmpty()) return;
-
-        ui.labelContents->setScaledContents(false);
         
         auto dpr = devicePixelRatioF();
         QPixmap pixmap = QPixmap::fromImage(itemImage);
@@ -61,6 +65,20 @@ protected:
         ui.labelContents->setPixmap(pixmap);
     }
 
+    void updateText() {
+        if (itemText.isEmpty())
+            return;
+        //QString text = QFontMetrics(ui.labelContents->font()).elidedText(itemText, Qt::ElideRight, ui.labelContents->width());
+        QString text;
+        for (const QChar& ch : itemText)
+        {
+            text += ch;
+            text += "\u200b";
+        }
+        text.removeLast();
+        ui.labelContents->setText(text);
+        cachedText = text;
+    }
 public:
     ClipboardListItemWidget(QWidget* parent = nullptr)
         : QWidget(parent) {
@@ -94,6 +112,7 @@ public:
         }
         else if (itemData.hasText())
         {
+            itemText = itemData.getText();
             ui.labelContents->setText(itemData.getText());
         }
     }

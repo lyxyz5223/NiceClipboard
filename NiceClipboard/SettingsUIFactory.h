@@ -78,6 +78,7 @@ struct SettingItem
     using ModifiedCallback = std::function<void(const SettingItem& item)>;
     using ExtraData = std::variant<BasicExtraData, ComboBoxExtraData, CustomExtraData>;
 
+    bool enabled = true; // 是否启用设置项，禁用的设置项在UI上会显示为灰色，并且无法修改
     QString key; // 用于唯一标识设置项，必须唯一
     QString name;
     SettingType type;
@@ -92,19 +93,22 @@ struct SettingItem
     }
     SettingItem() = default;
     SettingItem(QString key, QString name, SettingType type, QString description,
-        QVariant defaultValue, QVariant currentValue,
+        QVariant defaultValue, QVariant currentValue, bool enabled = true,
         ModifiedCallback modifiedCallback = ModifiedCallback(), QVariant modifiedCallbackData = QVariant(), ExtraData extraData = ExtraData{})
-        : key(std::move(key)), name(std::move(name)), type(type), description(std::move(description))
+        : enabled(enabled), key(std::move(key)), name(std::move(name)), type(type), description(std::move(description))
         , defaultValue(defaultValue), currentValue(currentValue)
         , modifiedCallback(modifiedCallback), modifiedCallbackData(modifiedCallbackData), extraData(extraData) {
         //this->extraData.copy(type, extraData);
     }
-    SettingItem(const SettingItem& other) : key(other.key), name(other.name), type(other.type), description(other.description)
+    SettingItem(const SettingItem& other) : enabled(other.enabled), key(other.key), name(other.name), type(other.type), description(other.description)
         , defaultValue(other.defaultValue), currentValue(other.currentValue)
         , modifiedCallback(other.modifiedCallback), modifiedCallbackData(other.modifiedCallbackData), extraData(other.extraData) {
         //extraData.copy(type, other.extraData);
     }
     SettingItem& operator=(const SettingItem& other) {
+        if (this == &other)
+            return *this;
+        enabled = other.enabled;
         key = other.key;
         name = other.name;
         type = other.type;
@@ -126,7 +130,8 @@ private:
     void setupUI(const SettingItem& item);
     template<typename ExtraDataType = SettingItem::BasicExtraData>
     void setupProperties(QObject* object, const SettingItem& item);
-    void addWidgetWithLabel(const QString& labelText, QWidget* widget);
+    void addWidgetWithLabel(const SettingItem& item, QWidget* widget);
+    void addWidgetWithoutLabel(const SettingItem& item, QWidget* widget);
 
 protected:
     //void closeEvent(QCloseEvent* event) override { }

@@ -43,7 +43,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         }
         setupValue(spinBox, setValue, int);
         connect(spinBox, &QSpinBox::valueChanged, this, [this, key=item.key](int value) { setSetting(key, value); });
-        addWidgetWithLabel(item.name, spinBox);
+        addWidgetWithLabel(item, spinBox);
         break;
     }
     case SettingItem::Double:
@@ -52,7 +52,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupProperties(spinBox, item);
         setupValue(spinBox, setValue, double);
         connect(spinBox, &QDoubleSpinBox::valueChanged, this, [this, key = item.key](double value) { setSetting(key, value); });
-        addWidgetWithLabel(item.name, spinBox);
+        addWidgetWithLabel(item, spinBox);
         break;
     }
     case SettingItem::CheckBox:
@@ -62,7 +62,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupProperties(checkBox, item);
         setupValue(checkBox, setChecked, bool);
         connect(checkBox, &QCheckBox::stateChanged, this, [this, key = item.key](int value) { setSetting(key, value); });
-        layout()->addWidget(checkBox);
+        addWidgetWithoutLabel(item, checkBox);
         break;
     }
     case SettingItem::RadioButton:
@@ -71,7 +71,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupProperties(radioButton, item);
         setupValue(radioButton, setChecked, int);
         connect(radioButton, &QRadioButton::toggled, this, [this, key = item.key](bool checked) { setSetting(key, checked); });
-        layout()->addWidget(radioButton);
+        addWidgetWithoutLabel(item, radioButton);
         break;
     }
     case SettingItem::LineEdit:
@@ -81,7 +81,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupValue(edit, setText, QString);
         //connect(edit, &QLineEdit::editingFinished, this, [this, key = item.key, edit]() { setSetting(key, edit->text()); });
         connect(edit, &QLineEdit::textChanged, this, [this, key = item.key](const QString& text) { setSetting(key, text); });
-        addWidgetWithLabel(item.name, edit);
+        addWidgetWithLabel(item, edit);
         break;
     }
     case SettingItem::TextEdit:
@@ -90,7 +90,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupProperties(edit, item);
         setupValue(edit, setText, QString);
         connect(edit, &QTextEdit::textChanged, this, [this, key = item.key, edit]() { setSetting(key, edit->toHtml()); });
-        addWidgetWithLabel(item.name, edit);
+        addWidgetWithLabel(item, edit);
         break;
     }
     case SettingItem::PlainTextEdit:
@@ -99,7 +99,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupProperties(edit, item);
         setupValue(edit, setPlainText, QString);
         connect(edit, &QPlainTextEdit::textChanged, this, [this, key = item.key, edit]() { setSetting(key, edit->toPlainText()); });
-        addWidgetWithLabel(item.name, edit);
+        addWidgetWithLabel(item, edit);
         break;
     }
     case SettingItem::ComboBox:
@@ -124,7 +124,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         }
         //connect(comboBox, &QComboBox::currentTextChanged, this, [this, key = item.key](const QString& text) { setSetting(key, text); });
         connect(comboBox, &QComboBox::currentIndexChanged, this, [this, key = item.key](int index) { setSetting(key, index); });
-        addWidgetWithLabel(item.name, comboBox);
+        addWidgetWithLabel(item, comboBox);
         break;
     }
     case SettingItem::Slider:
@@ -133,7 +133,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         setupProperties(slider, item);
         setupValue(slider, setValue, int);
         connect(slider, &QSlider::valueChanged, this, [this, key = item.key](int value) { setSetting(key, value); });
-        addWidgetWithLabel(item.name, slider);
+        addWidgetWithLabel(item, slider);
         break;
     }
     case SettingItem::KeySequence:
@@ -143,7 +143,7 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
         auto v = item.currentValue.value<QKeySequence>().toString();
         setupValue(keySeq, setKeySequence, QKeySequence);
         connect(keySeq, &QKeySequenceEdit::keySequenceChanged, this, [this, key = item.key](const QKeySequence& seq) { setSetting(key, seq); });
-        addWidgetWithLabel(item.name, keySeq);
+        addWidgetWithLabel(item, keySeq);
     }
         break;
     case SettingItem::Custom:
@@ -153,13 +153,13 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
             if (customData.widget)
             {
                 setupProperties<SettingItem::CustomExtraData>(customData.widget, item);
-                layout()->addWidget(customData.widget);
+                addWidgetWithoutLabel(item, customData.widget);
             }
             else if (customData.creator)
             {
                 auto* l = customData.creator(this);
                 setupProperties<SettingItem::CustomExtraData>(l, item);
-                layout()->addWidget(l);
+                addWidgetWithoutLabel(item, l);
             }
         }
         break;
@@ -168,12 +168,21 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
     }
 }
 
-void ISettingsUIWidget::addWidgetWithLabel(const QString& labelText, QWidget* widget)
+void ISettingsUIWidget::addWidgetWithLabel(const SettingItem& item, QWidget* widget)
 {
+    auto* label = new QLabel(item.name, this);
+    label->setEnabled(item.enabled);
+    widget->setEnabled(item.enabled);
     QHBoxLayout* hl = new QHBoxLayout();
-    hl->addWidget(new QLabel(labelText + tr("："), this));
+    hl->addWidget(label);
     hl->addWidget(widget);
     layout()->addItem(hl);
+}
+
+void ISettingsUIWidget::addWidgetWithoutLabel(const SettingItem& item, QWidget* widget)
+{
+    widget->setEnabled(item.enabled);
+    layout()->addWidget(widget);
 }
 
 template <typename ExtraDataType>

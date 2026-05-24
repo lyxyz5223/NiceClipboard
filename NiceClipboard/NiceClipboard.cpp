@@ -11,7 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <QWindow>
-#include <QShortCut>
+#include <QShortcut>
 #include <mutex>
 #include <windowsx.h> // GET_X_LPARAM, GET_Y_LPARAM
 #include <QThread>
@@ -28,6 +28,7 @@
 #include <QLocalSocket>
 #include <QLocalServer>
 #include "ClipboardListViewItem.h"
+#include "AboutDialog.h"
 
 NiceClipboard* g_MainWindow{ nullptr };
 HWND g_hwndLastForeground{ nullptr };
@@ -85,7 +86,7 @@ NiceClipboard::NiceClipboard(QWidget *parent)
     trayMenu->addSeparator();
     QAction* quitAction = trayMenu->addAction(tr("退出"), [this] { closeWindow(); });
     systemTray->setContextMenu(trayMenu);
-    systemTray->setIcon(QIcon(":/NiceClipboard/svgs/NiceClipboard.svg"));
+    systemTray->setIcon(appIcon);
     systemTray->setToolTip(tr("Nice Clipboard"));
     systemTray->connect(systemTray, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason) {
         if (reason == QSystemTrayIcon::Trigger) // 单击托盘图标
@@ -274,6 +275,7 @@ LRESULT NiceClipboard::lowLevelMouseHookProc(int nCode, WPARAM wParam, LPARAM lP
     return CallNextHookEx(g_hookMouseEvent, nCode, wParam, lParam);;
 }
 
+
 void NiceClipboard::pushInsertClipboardHistoryQueue(int index, const ClipboardItemData& item)
 {
     ClipboardHistoryOperation op{ ClipboardHistoryOperation::Insert };
@@ -290,6 +292,13 @@ void NiceClipboard::pushRemoveClipboardHistoryQueue(int index)
     clipboardHistoryOperationQueue.push_back(op);
 }
 
+void NiceClipboard::pushClearClipboardHistoryQueue()
+{
+    ClipboardHistoryOperation op{ ClipboardHistoryOperation::Clear };
+    std::unique_lock lock(clipboardHistoryOperationQueueMutex);
+    clipboardHistoryOperationQueue.push_back(op);
+}
+
 void NiceClipboard::insertClipboardHistoryItem(qsizetype index, const ClipboardItemData& itemData)
 {
     ClipboardListItem* item = new ClipboardListItem();
@@ -297,12 +306,7 @@ void NiceClipboard::insertClipboardHistoryItem(qsizetype index, const ClipboardI
     auto showMenu = [this, itemData, item](QPoint menuPos) {
         QMenu* menu = new AnimatedMenu(this);
         menu->addAction(tr("复制"), [this, itemData]() { itemData.copyToClipboard(); });
-        menu->addAction(tr("删除"), [this, item]() {
-            auto idx = ui.listWidgetClipboard->row(item);
-            ui.listWidgetClipboard->removeItemWidget(ui.listWidgetClipboard->item(idx));
-            pushRemoveClipboardHistoryQueue(idx);
-            delete item;
-        });
+        menu->addAction(tr("删除"), [this, item]() { removeClipboardHistoryItem(item); });
         menu->popup(menuPos);
     };
     item->setShowMenuFunction(showMenu);
@@ -311,6 +315,7 @@ void NiceClipboard::insertClipboardHistoryItem(qsizetype index, const ClipboardI
     else
         ui.listWidgetClipboard->addItem(item);
     ui.listWidgetClipboard->setItemWidget(item, item->itemWidget());
+    pushInsertClipboardHistoryQueue(index, itemData);
 }
 
 void NiceClipboard::searchClipboardHistoryItem()
@@ -325,6 +330,20 @@ void NiceClipboard::searchClipboardHistoryItem()
         auto matched = match.hasMatch();
         ui.listWidgetClipboard->setRowHidden(i, !matched);
     }
+}
+
+void NiceClipboard::removeClipboardHistoryItem(qsizetype index)
+{
+    QListWidgetItem* item = ui.listWidgetClipboard->item(index);
+    ui.listWidgetClipboard->removeItemWidget(item);
+    pushRemoveClipboardHistoryQueue(index);
+    delete item;
+}
+
+void NiceClipboard::removeClipboardHistoryItem(QListWidgetItem* item)
+{
+    auto idx = ui.listWidgetClipboard->row(item);
+    removeClipboardHistoryItem(idx);
 }
 
 
@@ -372,7 +391,6 @@ void NiceClipboard::readClipboardHistory()
                 itemData.rawData[key] = value;
         }
         insertClipboardHistoryItem(-1, itemData);
-        pushInsertClipboardHistoryQueue(-1, itemData);
     }
     dataSettings->endArray();
     auto timeEnd = std::chrono::high_resolution_clock::now();
@@ -405,16 +423,32 @@ void NiceClipboard::updateClipboardHistory()
         auto op = clipboardHistoryOperationQueue.front();
         clipboardHistoryOperationQueue.pop_front();
         lock.unlock();
-        if (op.op == ClipboardHistoryOperation::Insert)
+        switch (op.op)
         {
+        case ClipboardHistoryOperation::Insert:
+        {
+            logger.trace("Processing clipboard history insert operation: index={}", op.insert.index);
             insertClipboardHistory(op.insert.index, *op.insert.itemData);
             delete op.insert.itemData;
             clipboardHistoryChanged.store(true);
+            break;
         }
-        else if (op.op == ClipboardHistoryOperation::Remove)
+        case ClipboardHistoryOperation::Remove:
         {
+            logger.trace("Processing clipboard history remove operation: index={}", op.remove.index);
             removeClipboardHistory(op.remove.index);
             clipboardHistoryChanged.store(true);
+            break;
+        }
+        case ClipboardHistoryOperation::Clear:
+        {
+            logger.trace("Processing clipboard history clear operation");
+            clearClipboardHistory();
+            clipboardHistoryChanged.store(true);
+            break;
+        }
+        default:
+            break;
         }
         lock.lock();
     }
@@ -947,6 +981,33 @@ bool NiceClipboard::nativeEvent(const QByteArray& eventType, void* message, qint
     return false;
 }
 
+void NiceClipboard::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui.retranslateUi(this);
+        updateMainWindowStyle();
+    }
+    else if (event->type() == QEvent::WindowStateChange)
+    {
+        // 最大化
+        if (!(static_cast<QWindowStateChangeEvent*>(event)->oldState() & Qt::WindowMaximized)
+            && this->isMaximized())
+        {
+            logger.info("Window maximized.");
+            ui.btnShowMaximized->setIcon(restoreIcon);
+        }
+        // 从最大化还原
+        else if ((static_cast<QWindowStateChangeEvent*>(event)->oldState() & Qt::WindowMaximized)
+            && !this->isMaximized())
+        {
+            logger.info("Window restored from maximized state.");
+            ui.btnShowMaximized->setIcon(maximizeIcon);
+        }
+    }
+    QMainWindow::changeEvent(event);
+}
+
 
 
 void NiceClipboard::registerGlobalHotKeys()
@@ -1155,7 +1216,6 @@ void NiceClipboard::onClipboardDataChanged()
     if (!itemData.shouldHandleClipboardEvent())
         return;
     insertClipboardHistoryItem(0, itemData);
-    pushInsertClipboardHistoryQueue(0, itemData);
     //printClipboardData(mimeData);
 }
 
@@ -1244,7 +1304,7 @@ void NiceClipboard::onBtnMenuClicked()
     menu->addAction(tr("设置"), [this] { onBtnSettingsClicked(); });
     menu->addSeparator();
     menu->addAction(tr("关于"), [this] {
-        QMessageBox::about(this, tr("关于 Nice Clipboard"), tr("Nice Clipboard 是一个剪贴板增强工具，支持文本、图片等多种格式的剪贴板历史记录和管理。\n\n项目地址: https://github.com/lyxyz5223/NiceClipboard"));
+        openAboutDialog();
     });
     menu->popup(ui.btnMenu->mapToGlobal(QPoint(ui.btnMenu->width() / 2, ui.btnMenu->height())));
 }
@@ -1341,5 +1401,29 @@ void NiceClipboard::onBtnSettingsClicked()
     });
     settingsWidget->show();
     //dialog->show();
+}
+
+void NiceClipboard::onBtnClearClicked()
+{
+    ui.listWidgetClipboard->clear();
+    pushClearClipboardHistoryQueue();
+}
+
+void NiceClipboard::openAboutDialog()
+{
+    auto* dlgAbout = new AboutDialog(this);
+    dlgAbout->setAttribute(Qt::WA_DeleteOnClose);
+    {// 为关于对话框添加一个确定按钮
+        auto* layout = new QHBoxLayout();
+        dlgAbout->layout()->addItem(layout);
+        auto* btnOk = new QPushButton(tr("确定"), dlgAbout);
+        QSpacerItem* hSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        layout->addItem(hSpacer);
+        layout->addWidget(btnOk);
+        dlgAbout->connect(btnOk, &QPushButton::clicked, dlgAbout, [dlgAbout] {
+            dlgAbout->close();
+        });
+    }
+    dlgAbout->exec();
 }
 

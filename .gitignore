@@ -369,4 +369,5 @@ FodyWeavers.xsd
 **/build
 **/Configs
 **/Data
-pack
+pack/
+WorkingDirectory/

@@ -1,33 +1,39 @@
 <RCC>
   <qresource prefix="/NiceClipboard">
-    <file>svgs/reduce.svg</file>
-    <file>svgs/enlarge.svg</file>
-    <file>svgs/expand.svg</file>
-    <file>svgs/collapse.svg</file>
-    <file>svgs/sort.svg</file>
-    <file>svgs/settings.svg</file>
-    <file>svgs/more-horiz.svg</file>
-    <file>svgs/more-horiz-circle.svg</file>
-    <file>svgs/more-vert.svg</file>
-    <file>svgs/more-vert-circle.svg</file>
-    <file>svgs/pin.svg</file>
-    <file>svgs/pin-slash.svg</file>
-    <file>svgs/pin-slash-solid.svg</file>
-    <file>svgs/pin-solid.svg</file>
-    <file>svgs/maximize.svg</file>
-    <file>svgs/minus.svg</file>
-    <file>svgs/minus-circle.svg</file>
-    <file>svgs/minus-circle-solid.svg</file>
-    <file>svgs/minus-square.svg</file>
-    <file>svgs/minus-square-solid.svg</file>
-    <file>svgs/xmark.svg</file>
-    <file>svgs/search.svg</file>
-    <file>svgs/xmark-circle.svg</file>
-    <file>svgs/xmark-square.svg</file>
-    <file>svgs/xmark-square-solid.svg</file>
     <file>svgs/NiceClipboard.svg</file>
-    <file>svgs/heart.svg</file>
-    <file>svgs/clipboard-check.svg</file>
-    <file>svgs/paste-clipboard.svg</file>
+  </qresource>
+  <qresource prefix="iconoir">
+    <file>svgs/iconoir/clipboard-check.svg</file>
+    <file>svgs/iconoir/collapse.svg</file>
+    <file>svgs/iconoir/enlarge.svg</file>
+    <file>svgs/iconoir/expand.svg</file>
+    <file>svgs/iconoir/heart.svg</file>
+    <file>svgs/iconoir/list.svg</file>
+    <file>svgs/iconoir/maximize.svg</file>
+    <file>svgs/iconoir/minus.svg</file>
+    <file>svgs/iconoir/minus-circle.svg</file>
+    <file>svgs/iconoir/minus-circle-solid.svg</file>
+    <file>svgs/iconoir/minus-square.svg</file>
+    <file>svgs/iconoir/minus-square-solid.svg</file>
+    <file>svgs/iconoir/more-horiz.svg</file>
+    <file>svgs/iconoir/more-horiz-circle.svg</file>
+    <file>svgs/iconoir/more-vert.svg</file>
+    <file>svgs/iconoir/more-vert-circle.svg</file>
+    <file>svgs/iconoir/paste-clipboard.svg</file>
+    <file>svgs/iconoir/pin.svg</file>
+    <file>svgs/iconoir/pin-slash.svg</file>
+    <file>svgs/iconoir/pin-slash-solid.svg</file>
+    <file>svgs/iconoir/pin-solid.svg</file>
+    <file>svgs/iconoir/reduce.svg</file>
+    <file>svgs/iconoir/search.svg</file>
+    <file>svgs/iconoir/settings.svg</file>
+    <file>svgs/iconoir/sort.svg</file>
+    <file>svgs/iconoir/xmark.svg</file>
+    <file>svgs/iconoir/xmark-circle.svg</file>
+    <file>svgs/iconoir/xmark-square.svg</file>
+    <file>svgs/iconoir/xmark-square-solid.svg</file>
+  </qresource>
+  <qresource prefix="feather">
+    <file>svgs/feather/trash.svg</file>
   </qresource>
 </RCC>

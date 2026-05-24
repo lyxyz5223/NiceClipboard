@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>NiceClipboard</string>
+   <string>Nice Clipboard</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -56,7 +56,7 @@
         </property>
         <property name="icon">
          <iconset resource="NiceClipboard.qrc">
-          <normaloff>:/NiceClipboard/svgs/more-vert.svg</normaloff>:/NiceClipboard/svgs/more-vert.svg</iconset>
+          <normaloff>:/iconoir/svgs/iconoir/more-vert.svg</normaloff>:/iconoir/svgs/iconoir/more-vert.svg</iconset>
         </property>
        </widget>
       </item>
@@ -79,7 +79,7 @@
         </property>
         <property name="icon">
          <iconset resource="NiceClipboard.qrc">
-          <normaloff>:/NiceClipboard/svgs/minus.svg</normaloff>:/NiceClipboard/svgs/minus.svg</iconset>
+          <normaloff>:/iconoir/svgs/iconoir/minus.svg</normaloff>:/iconoir/svgs/iconoir/minus.svg</iconset>
         </property>
        </widget>
       </item>
@@ -102,7 +102,7 @@
         </property>
         <property name="icon">
          <iconset resource="NiceClipboard.qrc">
-          <normaloff>:/NiceClipboard/svgs/maximize.svg</normaloff>:/NiceClipboard/svgs/maximize.svg</iconset>
+          <normaloff>:/iconoir/svgs/iconoir/enlarge.svg</normaloff>:/iconoir/svgs/iconoir/enlarge.svg</iconset>
         </property>
        </widget>
       </item>
@@ -125,7 +125,7 @@
         </property>
         <property name="icon">
          <iconset resource="NiceClipboard.qrc">
-          <normaloff>:/NiceClipboard/svgs/xmark.svg</normaloff>:/NiceClipboard/svgs/xmark.svg</iconset>
+          <normaloff>:/iconoir/svgs/iconoir/xmark.svg</normaloff>:/iconoir/svgs/iconoir/xmark.svg</iconset>
         </property>
        </widget>
       </item>
@@ -162,13 +162,13 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="RoundedIconButton" name="btnSort">
+       <widget class="RoundedIconButton" name="btnSettings">
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset resource="NiceClipboard.qrc">
-          <normaloff>:/NiceClipboard/svgs/sort.svg</normaloff>:/NiceClipboard/svgs/sort.svg</iconset>
+          <normaloff>:/iconoir/svgs/iconoir/settings.svg</normaloff>:/iconoir/svgs/iconoir/settings.svg</iconset>
         </property>
        </widget>
       </item>
@@ -184,6 +184,17 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="RoundedIconButton" name="btnSort">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="NiceClipboard.qrc">
+          <normaloff>:/iconoir/svgs/iconoir/sort.svg</normaloff>:/iconoir/svgs/iconoir/sort.svg</iconset>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QWidget" name="widgetSearch" native="true">
@@ -210,7 +221,7 @@
           <widget class="RoundedIconButton" name="btnSearch">
            <property name="icon">
             <iconset resource="NiceClipboard.qrc">
-             <normaloff>:/NiceClipboard/svgs/search.svg</normaloff>:/NiceClipboard/svgs/search.svg</iconset>
+             <normaloff>:/iconoir/svgs/iconoir/search.svg</normaloff>:/iconoir/svgs/iconoir/search.svg</iconset>
            </property>
           </widget>
          </item>
@@ -231,13 +242,13 @@
        </spacer>
       </item>
       <item>
-       <widget class="RoundedIconButton" name="btnSettings">
+       <widget class="RoundedIconButton" name="btnClear">
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset resource="NiceClipboard.qrc">
-          <normaloff>:/NiceClipboard/svgs/settings.svg</normaloff>:/NiceClipboard/svgs/settings.svg</iconset>
+          <normaloff>:/feather/svgs/feather/trash.svg</normaloff>:/feather/svgs/feather/trash.svg</iconset>
         </property>
        </widget>
       </item>
@@ -274,8 +285,8 @@
      <y>25</y>
     </hint>
     <hint type="destinationlabel">
-     <x>319</x>
-     <y>5</y>
+     <x>311</x>
+     <y>6</y>
     </hint>
    </hints>
   </connection>
@@ -286,8 +297,8 @@
    <slot>onBtnShowMaximizedClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>279</x>
-     <y>25</y>
+     <x>271</x>
+     <y>34</y>
     </hint>
     <hint type="destinationlabel">
      <x>276</x>
@@ -334,12 +345,12 @@
    <slot>onBtnSettingsClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>309</x>
-     <y>364</y>
+     <x>37</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
      <x>277</x>
-     <y>359</y>
+     <y>264</y>
     </hint>
    </hints>
   </connection>
@@ -350,12 +361,28 @@
    <slot>onBtnSortClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>33</x>
-     <y>365</y>
+     <x>104</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
      <x>50</x>
-     <y>358</y>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnClear</sender>
+   <signal>clicked()</signal>
+   <receiver>NiceClipboardClass</receiver>
+   <slot>onBtnClearClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>248</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>238</y>
     </hint>
    </hints>
   </connection>
@@ -367,5 +394,6 @@
   <slot>onBtnMenuClicked()</slot>
   <slot>onBtnSettingsClicked()</slot>
   <slot>onBtnSortClicked()</slot>
+  <slot>onBtnClearClicked()</slot>
  </slots>
 </ui>
