@@ -46,6 +46,7 @@ const QMap<QString, QVariant> g_defaultSettings{
     DEFAULT_SETTING_ITEM(GlobalConfigManager::MouseDoubleRightClickInterval, 200),
     DEFAULT_SETTING_ITEM(GlobalConfigManager::ShowWindowShortcut, QKeySequence{ QKeyCombination(Qt::AltModifier | Qt::ControlModifier | Qt::ShiftModifier, Qt::Key_S) }),
     DEFAULT_SETTING_ITEM(GlobalConfigManager::QSSMainWindowStyle, QString("")),
+    DEFAULT_SETTING_ITEM(GlobalConfigManager::ClipboardHistoryListDragType, 1)
 };
 
 
@@ -66,6 +67,17 @@ QList<SettingPage> g_settingPages{ {
         SETTING_ITEM(GlobalConfigManager::MouseDoubleLeftClickInterval, SettingItem::UInt32, "鼠标左键双击间隔", "鼠标左键双击的时间间隔（毫秒）"),
         SETTING_ITEM(GlobalConfigManager::MouseDoubleMiddleClickInterval, SettingItem::UInt32, "鼠标中键双击间隔", "鼠标中键双击的时间间隔（毫秒）"),
         SETTING_ITEM(GlobalConfigManager::MouseDoubleRightClickInterval, SettingItem::UInt32, "鼠标右键双击间隔", "鼠标右键双击的时间间隔（毫秒）"),
+        SETTING_ITEM_EX(GlobalConfigManager::ClipboardHistoryListDragType, SettingItem::ComboBox, "历史记录列表拖动类型", "剪贴板历史记录列表的拖动类型",
+            SettingItem::ComboBoxExtraData(
+                QStringList({
+                    QObject::tr("禁止拖动"),
+                    QObject::tr("触摸拖动"),
+                    QObject::tr("鼠标左键拖动"),
+                    QObject::tr("鼠标中键拖动"),
+                    QObject::tr("鼠标右键拖动")
+                })
+            )
+        ),
     })),
     SETTING_PAGE("shortcuts", "快捷键", SETTING_ITEMS({
         SETTING_ITEM(GlobalConfigManager::ShowWindowShortcut, SettingItem::KeySequence, "显示主窗口快捷键", "用于显示主窗口的快捷键"),
@@ -76,7 +88,7 @@ QList<SettingPage> g_settingPages{ {
     })),
     SETTING_PAGE("about", "关于", SETTING_ITEMS({
         { ""/*这不是设置项，所以可以为空*/, QObject::tr("版本"), SettingItem::Custom, "软件版本", QVariant(), QVariant(), SettingItem::ModifiedCallback(), QVariant(),
-            SettingItem::CustomExtraData{{}, nullptr, [](QWidget* settingPage) -> QWidget* {
+            SettingItem::CustomExtraData{nullptr, [](QWidget* settingPage) -> QWidget* {
                 QWidget* page = new QWidget();
                 page->setLayout(new QVBoxLayout());
                 page->layout()->setContentsMargins(0, 0, 0, 0);

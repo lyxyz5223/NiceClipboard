@@ -62,7 +62,8 @@ void SettingsWidget::saveConfig()
                 emit configChanged(item.key, item.currentValue, oldVal);
                 g_settingPages[pageIndex].settings[settingIndex].currentValue = item.currentValue;
             }
-            if (item.currentValue.canConvert<QKeySequence>())
+            if (item.currentValue.canConvert<QKeySequence>()
+                && item.currentValue.userType() == QMetaType::QKeySequence)
             {
                 auto curKeySeq = item.currentValue.value<QKeySequence>();
                 auto oldKeySeq = oldVal.value<QKeySequence>();

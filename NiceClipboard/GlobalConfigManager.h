@@ -29,6 +29,8 @@ public:
         MouseDoubleRightClickInterval,
         ShowWindowShortcut,
         QSSMainWindowStyle,
+        ClipboardHistoryListDragType,
+
     };
 
     constexpr static const char* configKeyToString(ConfigKey key) {
@@ -62,6 +64,8 @@ public:
             return "ShowWindowShortcut";
         case GlobalConfigManager::QSSMainWindowStyle:
             return "QSSMainWindowStyle";
+        case GlobalConfigManager::ClipboardHistoryListDragType:
+            return "ClipboardHistoryListDragType";
         default:
             return "";
         }

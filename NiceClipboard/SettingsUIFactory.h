@@ -31,16 +31,20 @@ struct SettingItem
 
     struct BasicExtraData {
         QMap<QString, QVariant> properties; // 用于存储Qt控件的属性，例如QCheckBox的tristate属性，QLineEdit的placeholderText属性等
+        BasicExtraData(const QMap<QString, QVariant>& properties = {}) : properties(properties) {}
     };
 
 
     struct ComboBoxExtraData : public BasicExtraData {
         QStringList options;
+        ComboBoxExtraData(const QStringList& options = {}, const QMap<QString, QVariant>& properties = {}) : BasicExtraData(properties), options(options) {}
     };
 
     struct CustomExtraData : public BasicExtraData {
         QWidget* widget = nullptr; // 需要用户自己创建布局和控件，并将它们添加到布局中
         std::function<QWidget*(QWidget* settingPage)> creator;
+        CustomExtraData(QWidget* widget = nullptr, const std::function<QWidget*(QWidget* settingPage)>& creator = nullptr, const QMap<QString, QVariant>& properties = {})
+            : BasicExtraData(properties), widget(widget), creator(creator) {}
         //CustomExtraData() = default;
         //using BasicExtraData::BasicExtraData;
         //CustomExtraData(QLayout* layout) : layout(layout) {}

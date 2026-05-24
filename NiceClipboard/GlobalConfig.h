@@ -17,3 +17,12 @@ extern QList<SettingPage> g_settingPages;
 
 
 void updateCurrentSettings();
+
+
+enum ClipboardHistoryListDragType {
+    None,
+    Touch,
+    MouseLeftButton,
+    MouseMiddleButton,
+    MouseRightButton,
+};

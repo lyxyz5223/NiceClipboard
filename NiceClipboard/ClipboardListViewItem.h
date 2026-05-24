@@ -29,6 +29,37 @@ class ClipboardListItemWidget : public QWidget
     Q_OBJECT
 private:
     Ui::ClipboardListViewItemWidget ui;
+    //ClipboardItemData itemData;
+    QImage itemImage;
+    QPixmap cachedPixmap;
+
+protected:
+    virtual void showEvent(QShowEvent* event) override {
+        QWidget::showEvent(event);
+        if (cachedPixmap.isNull())
+            updateImage();
+    }
+
+    virtual void resizeEvent(QResizeEvent* event) override {
+        QWidget::resizeEvent(event);
+        updateImage();
+    }
+
+    void updateImage() {
+        if (itemImage.isNull()) return;
+
+        QSize labelSize = ui.labelContents->contentsRect().size();
+        if (labelSize.isEmpty()) return;
+
+        ui.labelContents->setScaledContents(false);
+        
+        auto dpr = devicePixelRatioF();
+        QPixmap pixmap = QPixmap::fromImage(itemImage);
+        pixmap = pixmap.scaled(labelSize * dpr, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        pixmap.setDevicePixelRatio(dpr);
+        cachedPixmap = pixmap;
+        ui.labelContents->setPixmap(pixmap);
+    }
 
 public:
     ClipboardListItemWidget(QWidget* parent = nullptr)
@@ -50,11 +81,12 @@ public:
             });
     }
     void updateUiClipboardItemData(const ClipboardItemData& itemData) {
+        //this->itemData = itemData;
+        this->itemImage = itemData.getImage();
+
         if (itemData.hasImage())
         {
-            ui.labelContents->setScaledContents(false);
-            ui.labelContents->setPixmap(QPixmap::fromImage(itemData.getImage()).scaled(ui.labelContents->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-            //ui.labelContents->setImage(itemData.getImage());
+            updateImage();
         }
         else if (itemData.hasHtml())
         {

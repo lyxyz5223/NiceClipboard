@@ -74,8 +74,6 @@ NiceClipboard::NiceClipboard(QWidget *parent)
 
     if (ui.listWidgetClipboard->verticalScrollMode() == QAbstractItemView::ScrollPerPixel)
         ui.listWidgetClipboard->verticalScrollBar()->setSingleStep(30);
-    QScroller::grabGesture(ui.listWidgetClipboard->viewport(), QScroller::TouchGesture);
-    QScroller::grabGesture(ui.listWidgetClipboard->viewport(), QScroller::LeftMouseButtonGesture);
 
     systemTray = new QSystemTrayIcon(this);
     // 创建托盘菜单
@@ -118,6 +116,25 @@ NiceClipboard::NiceClipboard(QWidget *parent)
         for (auto& setting : page.settings)
             if (setting.key.size())
                 logger.trace("Setting: {} = {}", setting.key.toStdString(), setting.currentValue.toString().toStdString());
+
+    switch (globalConfig->query(GlobalConfigManager::ClipboardHistoryListDragType).toInt())
+    {
+    case ClipboardHistoryListDragType::Touch:
+        QScroller::grabGesture(ui.listWidgetClipboard->viewport(), QScroller::TouchGesture);
+        break;
+    case ClipboardHistoryListDragType::MouseLeftButton:
+        QScroller::grabGesture(ui.listWidgetClipboard->viewport(), QScroller::LeftMouseButtonGesture);
+        break;
+    case ClipboardHistoryListDragType::MouseMiddleButton:
+        QScroller::grabGesture(ui.listWidgetClipboard->viewport(), QScroller::MiddleMouseButtonGesture);
+        break;
+    case ClipboardHistoryListDragType::MouseRightButton:
+        QScroller::grabGesture(ui.listWidgetClipboard->viewport(), QScroller::RightMouseButtonGesture);
+        break;
+    case ClipboardHistoryListDragType::None:
+    default:
+        break;
+    }
 
 
     auto&& showInSystemTray = globalConfig->query(GlobalConfigManager::ShowInSystemTray).toBool();
@@ -1125,6 +1142,7 @@ void NiceClipboard::closeWindow()
 
 void NiceClipboard::hideWindow()
 {
+    //QScroller::scroller(ui.listWidgetClipboard->viewport())->stop();
     hide();
 }
 
@@ -1296,6 +1314,7 @@ void NiceClipboard::onBtnSettingsClicked()
             settingsWidget->mainWindowStyleUpdated = true;
     });
     connect(settingsWidget, &SettingsWidget::hotKeyChanged, this, [this](const QString& key, const QKeySequence& keySeq, const QKeySequence& oldKeySeq) {
+        logger.info("Hotkey changed, update hotkey: {} = {}, old hotkey: {}", key.toStdString(), keySeq.toString().toStdString(), oldKeySeq.toString().toStdString());
         unregisterHotKey(oldKeySeq[0]);
         registerHotKey(keySeq[0]);
     });
