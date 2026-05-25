@@ -114,14 +114,14 @@ void ISettingsUIWidget::setupUI(const SettingItem& item)
             }
         }
         setupProperties<SettingItem::ComboBoxExtraData>(comboBox, item);
-        if (item.currentValue.userType() == QMetaType::QString || item.defaultValue.userType() == QMetaType::QString)
-        {
-            setupValue(comboBox, setCurrentText, QString);
-        }
-        else
-        {
+        //if (item.currentValue.userType() == QMetaType::QString || item.defaultValue.userType() == QMetaType::QString)
+        //{
+        //    setupValue(comboBox, setCurrentText, QString);
+        //}
+        //else
+        //{
             setupValue(comboBox, setCurrentIndex, int);
-        }
+        //}
         //connect(comboBox, &QComboBox::currentTextChanged, this, [this, key = item.key](const QString& text) { setSetting(key, text); });
         connect(comboBox, &QComboBox::currentIndexChanged, this, [this, key = item.key](int index) { setSetting(key, index); });
         addWidgetWithLabel(item, comboBox);

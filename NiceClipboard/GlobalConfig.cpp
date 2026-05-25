@@ -53,15 +53,15 @@ const QMap<QString, QVariant> g_defaultSettings{
 
 QList<SettingPage> g_settingPages{ {
     SETTING_PAGE("regular", "常规", SETTING_ITEMS({
-        SETTING_ITEM(true, GlobalConfigManager::StartWithWindows, SettingItem::CheckBox, "开机自启动：", "是否开机自启动"),
-        SETTING_ITEM(true, GlobalConfigManager::ShowInSystemTray, SettingItem::CheckBox, "显示在系统托盘：", "是否在系统托盘显示图标"),
+        SETTING_ITEM(true, GlobalConfigManager::StartWithWindows, SettingItem::CheckBox, "开机自启动", "是否开机自启动"),
+        SETTING_ITEM(true, GlobalConfigManager::ShowInSystemTray, SettingItem::CheckBox, "显示在系统托盘", "是否在系统托盘显示图标"),
     })),
     SETTING_PAGE("advanced", "高级", SETTING_ITEMS({
         SETTING_ITEM(true, GlobalConfigManager::SavedDataFilePath, SettingItem::LineEdit, "剪贴板数据保存路径：", "剪贴板历史记录数据的保存路径"),
         SETTING_ITEM(true, GlobalConfigManager::SavedDataImagePath, SettingItem::LineEdit, "剪贴板图片保存路径：", "剪贴板图片的保存路径"),
         SETTING_ITEM(true, GlobalConfigManager::SavedDataTimerInterval, SettingItem::UInt32, "剪贴板数据保存间隔：", "自动保存剪贴板历史记录数据的时间间隔（毫秒），每隔该时间间隔检查一次历史记录数据，若有变化则保存一次"),
-        SETTING_ITEM(true, GlobalConfigManager::ClearHistoryOnLoad, SettingItem::CheckBox, "启动时自动清除历史记录：", "启动软件时自动清除上次软件保存的剪贴板历史记录"),
-        SETTING_ITEM(true, GlobalConfigManager::ClearHistoryOnQuit, SettingItem::CheckBox, "退出时自动清除历史记录：", "退出软件时自动清除软件保存的剪贴板历史记录（软件崩溃除外）"),
+        SETTING_ITEM(true, GlobalConfigManager::ClearHistoryOnLoad, SettingItem::CheckBox, "启动时自动清除历史记录", "启动软件时自动清除上次软件保存的剪贴板历史记录"),
+        SETTING_ITEM(true, GlobalConfigManager::ClearHistoryOnQuit, SettingItem::CheckBox, "退出时自动清除历史记录", "退出软件时自动清除软件保存的剪贴板历史记录（软件崩溃除外）"),
         SETTING_ITEM(false, GlobalConfigManager::ClipboardHistoryRetentionDays, SettingItem::UInt32, "剪贴板历史记录保留天数：", "剪贴板历史记录的最大保留天数，超过后会删除最旧的条目"),
         SETTING_ITEM(true, GlobalConfigManager::HistorySize, SettingItem::UInt32, "历史记录大小：", "剪贴板历史记录的最大条目数，超过后会删除最旧的条目"),
         SETTING_ITEM(true, GlobalConfigManager::MouseDoubleLeftClickInterval, SettingItem::UInt32, "鼠标左键双击间隔：", "鼠标左键双击的时间间隔（毫秒）"),
