@@ -31,7 +31,7 @@
 
 ## 📌运行截图
 
-<img width="628" height="588" alt="image" src="https://github.com/user-attachments/assets/8621cdf9-62e8-4d83-a631-b49104c37ff9" />
+<img width="638" height="740" alt="image" src="https://github.com/user-attachments/assets/5c86cceb-e6f3-4004-9e21-54f3ed3f89aa" />
 
 ## 🔧 构建方法
 
